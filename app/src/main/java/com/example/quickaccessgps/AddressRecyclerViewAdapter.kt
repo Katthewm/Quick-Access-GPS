@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-class AddressRecyclerViewAdapter(private var addresses: List<Address>) : RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder>() {
+class AddressRecyclerViewAdapter(private val addresses: ArrayList<Address>) :
+    RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val addressTextView: TextView = itemView.findViewById(R.id.address_text)
@@ -37,7 +38,7 @@ class AddressRecyclerViewAdapter(private var addresses: List<Address>) : Recycle
     }
 
     private fun sortAddresses() {
-        addresses = addresses.sortedWith(Comparator { first, second ->
+        addresses.sortWith(Comparator { first, second ->
             if (first.isFavorite && !second.isFavorite) {
                 return@Comparator -1
             } else if (!first.isFavorite && second.isFavorite) {

@@ -1,14 +1,17 @@
 package com.example.quickaccessgps
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,15 +22,16 @@ class MainActivity : AppCompatActivity() {
         val addAddressButton: ImageButton = findViewById(R.id.add_address)
         addAddressButton.setOnClickListener { addAddress() }
 
-        val recyclerView: RecyclerView = findViewById(R.id.address_rv)
+        recyclerView = findViewById(R.id.address_rv)
+        recyclerView.adapter = AddressRecyclerViewAdapter(AddressSingleton.addresses)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = AddressRecyclerViewAdapter(listOf())
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 
-    fun addAddress() {
-        Toast.makeText(this, "Adding Address", Toast.LENGTH_LONG).show()
+    private fun addAddress() {
+        val intent = Intent(this, AddAddressActivity::class.java)
+        startActivity(intent)
     }
 
     fun deleteAddress() {
@@ -38,4 +42,3 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Sharing Address", Toast.LENGTH_LONG).show()
     }
 }
-//Test to see if I imported and push correctly

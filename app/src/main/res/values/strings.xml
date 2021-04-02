@@ -3,4 +3,12 @@
     <string name="address">Address</string>
     <string name="add_address_button">Add address button</string>
     <string name="favorite_or_unfavorite_an_address">Favorite or unfavorite an address</string>
+    <string name="addresses">Addresses</string>
+    <string name="add_address">Add Address</string>
+    <string name="cancel_add_address">Cancel add address</string>
+    <string name="address_name">Address Name</string>
+    <string name="name">Name:</string>
+    <string name="address_text">Address:</string>
+    <string name="address_hint">Address</string>
+    <string name="submit">Submit</string>
 </resources>
