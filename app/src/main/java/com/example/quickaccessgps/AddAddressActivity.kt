@@ -13,6 +13,8 @@ class AddAddressActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_address)
 
+        supportActionBar?.hide()
+
         val cancelButton: ImageButton = findViewById(R.id.cancel_add_address)
         val editAddressName: EditText = findViewById(R.id.address_name)
         val editAddress: EditText = findViewById(R.id.address_address)

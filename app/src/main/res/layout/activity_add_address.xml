@@ -37,6 +37,7 @@
                 android:layout_marginStart="20dp"
                 android:text="@string/add_address"
                 android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cancel_add_address" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

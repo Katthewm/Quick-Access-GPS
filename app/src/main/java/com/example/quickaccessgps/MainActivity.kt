@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), DeleteAddressDialogFragment.DeleteAddr
         recyclerView = findViewById(R.id.address_rv)
         adapter = AddressRecyclerViewAdapter(
             AddressSingleton.addresses,
-            { },
+            { addressIndex -> selectAddress(addressIndex) },
             { addressIndex -> showDeleteDialog(addressIndex) }
         )
         recyclerView.adapter = adapter
@@ -46,6 +46,16 @@ class MainActivity : AppCompatActivity(), DeleteAddressDialogFragment.DeleteAddr
     override fun onDialogPositiveClick(dialog: DialogFragment, addressIndex: Int) {
         AddressSingleton.removeAddress(addressIndex)
         adapter.notifyDataSetChanged()
+    }
+
+    fun selectAddress(addressIndex: Int) {
+        val intent = Intent(this, AddressActivity::class.java).apply {
+            putExtra(
+                "addressIndex",
+                addressIndex
+            )
+        }
+        startActivity(intent)
     }
 
     private fun addAddress() {

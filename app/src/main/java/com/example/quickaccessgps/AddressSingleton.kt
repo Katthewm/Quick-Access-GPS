@@ -2,8 +2,7 @@ package com.example.quickaccessgps
 
 object AddressSingleton {
     public val addresses = arrayListOf(
-        Address("Home", "asdfjasldkfa", true),
-        Address("Home 2", "asdkfjlasdkjfaslkdjfa", true)
+        Address("Fontbonne", "Fontbonne University", true)
     )
 
     public fun addAddress(address: Address) {

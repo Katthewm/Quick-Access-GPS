@@ -11,4 +11,7 @@
     <string name="address_text">Address:</string>
     <string name="address_hint">Address</string>
     <string name="submit">Submit</string>
+    <string name="title_activity_address">Address</string>
+    <string name="navigate">Navigate</string>
+    <string name="share">Share</string>
 </resources>
