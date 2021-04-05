@@ -22,4 +22,8 @@ object AddressSingleton {
             }
         })
     }
+
+    fun removeAddress(addressIndex: Int) {
+        addresses.removeAt(addressIndex)
+    }
 }

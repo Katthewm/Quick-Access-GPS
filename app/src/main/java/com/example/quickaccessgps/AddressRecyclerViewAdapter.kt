@@ -8,8 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-class AddressRecyclerViewAdapter(private val addresses: ArrayList<Address>) :
-    RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder>() {
+class AddressRecyclerViewAdapter(
+    private val addresses: ArrayList<Address>,
+    private val onItemClick: (position: Int) -> Unit,
+    private val onItemLongClick: (position: Int) -> Unit
+) : RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val addressTextView: TextView = itemView.findViewById(R.id.address_text)
@@ -21,7 +24,6 @@ class AddressRecyclerViewAdapter(private val addresses: ArrayList<Address>) :
             .inflate(R.layout.address_list_item, parent, false)
 
         sortAddresses()
-
         return ViewHolder(view)
     }
 
@@ -34,6 +36,12 @@ class AddressRecyclerViewAdapter(private val addresses: ArrayList<Address>) :
             setFavoriteButton(holder.favoriteAddressButton, addresses[position].isFavorite)
             sortAddresses()
             this.notifyDataSetChanged()
+        }
+
+        holder.itemView.setOnClickListener { onItemClick(position) }
+        holder.itemView.setOnLongClickListener {
+            onItemLongClick(position)
+            true
         }
     }
 
