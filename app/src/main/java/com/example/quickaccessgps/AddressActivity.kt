@@ -29,7 +29,11 @@ class AddressActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        address = AddressSingleton.addresses[intent.getIntExtra("addressIndex", 0)]
+        address = AddressSingleton.addresses?.get(intent.getIntExtra("addressIndex", 0)) ?: Address(
+            "",
+            "",
+            false
+        )
 
         val addressNameText: TextView = findViewById(R.id.address_name)
         addressNameText.text = address.name

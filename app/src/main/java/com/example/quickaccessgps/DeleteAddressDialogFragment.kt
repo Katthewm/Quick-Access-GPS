@@ -30,7 +30,13 @@ class DeleteAddressDialogFragment : DialogFragment() {
                 ?: throw IllegalStateException("addressIndex cannot be null")
             val builder = AlertDialog.Builder(it)
                 .setTitle("Delete Address")
-                .setMessage("Are you sure that you want to delete ${AddressSingleton.addresses[addressIndex].name}?")
+                .setMessage(
+                    "Are you sure that you want to delete ${
+                        AddressSingleton.addresses?.get(
+                            addressIndex
+                        )?.name
+                    }?"
+                )
                 .setPositiveButton("Delete") { _, _ ->
                     listener.onDialogPositiveClick(
                         this,

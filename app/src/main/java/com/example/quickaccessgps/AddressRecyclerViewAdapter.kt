@@ -6,10 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 
 class AddressRecyclerViewAdapter(
-    private val addresses: ArrayList<Address>,
     private val onItemClick: (position: Int) -> Unit,
     private val onItemLongClick: (position: Int) -> Unit
 ) : RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder>() {
@@ -23,18 +21,17 @@ class AddressRecyclerViewAdapter(
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.address_list_item, parent, false)
 
-        sortAddresses()
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val addresses = AddressSingleton.addresses ?: return
         holder.addressTextView.text = addresses[position].name
         setFavoriteButton(holder.favoriteAddressButton, addresses[position].isFavorite)
 
         holder.favoriteAddressButton.setOnClickListener {
-            addresses[position].isFavorite = !addresses[position].isFavorite
+            AddressSingleton.setIsFavorite(position, !addresses[position].isFavorite)
             setFavoriteButton(holder.favoriteAddressButton, addresses[position].isFavorite)
-            sortAddresses()
             this.notifyDataSetChanged()
         }
 
@@ -45,20 +42,8 @@ class AddressRecyclerViewAdapter(
         }
     }
 
-    private fun sortAddresses() {
-        addresses.sortWith(Comparator { first, second ->
-            if (first.isFavorite && !second.isFavorite) {
-                return@Comparator -1
-            } else if (!first.isFavorite && second.isFavorite) {
-                return@Comparator 1
-            } else {
-                return@Comparator first.name.compareTo(second.name)
-            }
-        })
-    }
-
     override fun getItemCount(): Int {
-        return addresses.size
+        return AddressSingleton.addresses?.size ?: 0
     }
 
     private fun setFavoriteButton(button: ImageButton, isFavorite: Boolean) {
