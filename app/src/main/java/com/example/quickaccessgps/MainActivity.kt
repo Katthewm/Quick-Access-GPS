@@ -1,20 +1,16 @@
 package com.example.quickaccessgps
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ProgressBar
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
@@ -48,28 +44,7 @@ class MainActivity : AppCompatActivity(), DeleteAddressDialogFragment.DeleteAddr
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         progressSpinner = findViewById(R.id.progress_spinner)
 
-        if (FirebaseAuth.getInstance().currentUser == null) {
-            val providers = arrayListOf(
-                AuthUI.IdpConfig.GoogleBuilder().build(),
-                AuthUI.IdpConfig.EmailBuilder().build()
-            )
-            val intent =
-                AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers)
-                    .build()
-
-            val resultLauncher =
-                registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                    val response = IdpResponse.fromResultIntent(result.data)
-
-                    if (result.resultCode == Activity.RESULT_OK) {
-                        loadAddresses()
-                    } else {
-                        Log.e("MainActivity", "Login error: " + response?.error.toString())
-                        finish()
-                    }
-                }
-            resultLauncher.launch(intent)
-        } else if (AddressSingleton.addresses == null || AddressSingleton.addresses!!.size == 0) {
+        if (AddressSingleton.addresses == null || AddressSingleton.addresses!!.size == 0) {
             loadAddresses()
         }
     }
