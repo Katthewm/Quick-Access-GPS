@@ -1,6 +1,8 @@
 package com.example.quickaccessgps
 
+import android.content.Intent
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -15,7 +17,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 class AddressActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
-    private lateinit var location: LatLng
     private lateinit var navigateButton: Button
     private lateinit var shareButton: Button
     private lateinit var address: Address
@@ -37,15 +38,28 @@ class AddressActivity : AppCompatActivity(), OnMapReadyCallback {
         addressText.text = address.address
 
         navigateButton = findViewById(R.id.navigate)
+        navigateButton.setOnClickListener { navigate() }
+
         shareButton = findViewById(R.id.share)
+        shareButton.setOnClickListener { share() }
+    }
+
+    private fun share() {
+        TODO("Not yet implemented")
+    }
+
+    private fun navigate() {
+        val intentUri = Uri.parse("google.navigation:q=${address.address.replace(" ", "+")}")
+        val intent = Intent(Intent.ACTION_VIEW, intentUri)
+        intent.setPackage("com.google.android.apps.maps")
+        startActivity(intent)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        val latLng = getLocationFromAddress(address.address)
+        val location = getLocationFromAddress(address.address)
 
-        if (latLng != null) {
-            location = latLng
+        if (location != null) {
             map.addMarker(MarkerOptions().position(location).title(address.name))
             map.moveCamera(CameraUpdateFactory.newLatLng(location))
             map.animateCamera(CameraUpdateFactory.zoomTo(15f))
