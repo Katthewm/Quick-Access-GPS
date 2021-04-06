@@ -1,11 +1,11 @@
-package com.example.quickaccessgps
+package com.example.quickaccessgps.share
 
 import com.google.firebase.firestore.DocumentId
 
-data class Address(
+data class Share(
     var name: String = "",
     var address: String = "",
-    @field:JvmField var isFavorite: Boolean = false
+    var from: String = ""
 ) {
     @DocumentId
     var id: String = ""

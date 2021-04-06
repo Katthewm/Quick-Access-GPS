@@ -1,4 +1,4 @@
-package com.example.quickaccessgps
+package com.example.quickaccessgps.address
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quickaccessgps.DataSingleton
+import com.example.quickaccessgps.R
 
 class AddAddressActivity : AppCompatActivity() {
 
@@ -21,7 +23,7 @@ class AddAddressActivity : AppCompatActivity() {
         val submitButton: Button = findViewById(R.id.address_submit)
 
         submitButton.setOnClickListener {
-            AddressSingleton.addAddress(
+            DataSingleton.addAddress(
                 Address(
                     editAddressName.text.toString(),
                     editAddress.text.toString(),

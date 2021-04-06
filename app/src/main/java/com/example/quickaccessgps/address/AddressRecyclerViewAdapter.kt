@@ -1,4 +1,4 @@
-package com.example.quickaccessgps
+package com.example.quickaccessgps.address
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.quickaccessgps.DataSingleton
+import com.example.quickaccessgps.R
 
 class AddressRecyclerViewAdapter(
     private val onItemClick: (position: Int) -> Unit,
@@ -25,12 +27,12 @@ class AddressRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val addresses = AddressSingleton.addresses ?: return
+        val addresses = DataSingleton.addresses ?: return
         holder.addressTextView.text = addresses[position].name
         setFavoriteButton(holder.favoriteAddressButton, addresses[position].isFavorite)
 
         holder.favoriteAddressButton.setOnClickListener {
-            AddressSingleton.setIsFavorite(position, !addresses[position].isFavorite)
+            DataSingleton.setIsFavorite(position, !addresses[position].isFavorite)
             setFavoriteButton(holder.favoriteAddressButton, addresses[position].isFavorite)
             this.notifyDataSetChanged()
         }
@@ -43,7 +45,7 @@ class AddressRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return AddressSingleton.addresses?.size ?: 0
+        return DataSingleton.addresses?.size ?: 0
     }
 
     private fun setFavoriteButton(button: ImageButton, isFavorite: Boolean) {

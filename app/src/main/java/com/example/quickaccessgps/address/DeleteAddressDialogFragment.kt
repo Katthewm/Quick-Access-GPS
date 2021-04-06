@@ -1,10 +1,11 @@
-package com.example.quickaccessgps
+package com.example.quickaccessgps.address
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import com.example.quickaccessgps.DataSingleton
 
 class DeleteAddressDialogFragment : DialogFragment() {
 
@@ -32,7 +33,7 @@ class DeleteAddressDialogFragment : DialogFragment() {
                 .setTitle("Delete Address")
                 .setMessage(
                     "Are you sure that you want to delete ${
-                        AddressSingleton.addresses?.get(
+                        DataSingleton.addresses?.get(
                             addressIndex
                         )?.name
                     }?"

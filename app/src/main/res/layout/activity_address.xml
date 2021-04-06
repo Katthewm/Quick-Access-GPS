@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddressActivity">
+    tools:context=".address.AddressActivity">
 
     <TextView
         android:id="@+id/text_address_name"
@@ -54,7 +54,7 @@
         app:layout_constraintStart_toEndOf="@id/text_address"
         app:layout_constraintTop_toTopOf="@id/text_address" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"

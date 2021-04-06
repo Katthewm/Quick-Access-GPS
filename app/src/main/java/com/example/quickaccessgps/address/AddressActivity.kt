@@ -1,4 +1,4 @@
-package com.example.quickaccessgps
+package com.example.quickaccessgps.address
 
 import android.content.Intent
 import android.location.Geocoder
@@ -6,7 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import com.example.quickaccessgps.DataSingleton
+import com.example.quickaccessgps.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -14,7 +18,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class AddressActivity : AppCompatActivity(), OnMapReadyCallback {
+class AddressActivity : AppCompatActivity(), OnMapReadyCallback,
+    ShareAddressDialogFragment.ShareAddressDialogListener {
 
     private lateinit var map: GoogleMap
     private lateinit var navigateButton: Button
@@ -29,7 +34,7 @@ class AddressActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        address = AddressSingleton.addresses?.get(intent.getIntExtra("addressIndex", 0)) ?: Address(
+        address = DataSingleton.addresses?.get(intent.getIntExtra("addressIndex", 0)) ?: Address(
             "",
             "",
             false
@@ -49,7 +54,11 @@ class AddressActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun share() {
-        TODO("Not yet implemented")
+        val dialog = ShareAddressDialogFragment().apply {
+            arguments = Bundle().apply { putString("addressId", address.id) }
+        }
+
+        dialog.show(supportFragmentManager, "ShareAddressDialogFragment")
     }
 
     private fun navigate() {
@@ -79,5 +88,15 @@ class AddressActivity : AppCompatActivity(), OnMapReadyCallback {
         val location = geocoder.getFromLocationName(address, 5)
 
         return if (location.size > 0) LatLng(location[0].latitude, location[0].longitude) else null
+    }
+
+    override fun onDialogPositiveClick(
+        dialog: DialogFragment,
+        targetEmail: String,
+        address: Address
+    ) {
+        DataSingleton.sendShare(targetEmail, address)?.addOnSuccessListener {
+            Toast.makeText(this@AddressActivity, "Shared successfully!", Toast.LENGTH_SHORT).show()
+        }
     }
 }
